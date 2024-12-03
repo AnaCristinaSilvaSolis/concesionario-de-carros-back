@@ -1,0 +1,68 @@
+spring:
+  profiles:
+    active: dev
+
+server:
+  servlet:
+    context-path: /api
+
+jwt:
+  secret:
+    key: LLAVE_SECRETA
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/concesionario_coches
+    username: ana
+    password: root1234
+
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+---
+
+spring:
+
+  config:
+    activate:
+      on-profile: prod
+
+  cloud:
+    azure:
+      keyvault:
+        secret:
+          property-source-enabled: true
+          property-sources[0]:
+            endpoint: https://keys-springboot-db.vault.azure.net/
+            profile:
+              tenant-id: 41353d1e-2028-4a01-9f61-3761d8af2071
+            credential:
+              client-id: 9b900559-e1d4-454b-8c85-8fcd32444729
+              client-secret: xAC8Q~m32OuWyr3oa-j_WH3FMU~ZvD0wdddCocGD
+
+  datasource:
+    url: ${spring-data-source-url}
+    #username: ${spring-datasource-username}
+    #password: ${spring-datasource-password}
+
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+
+
